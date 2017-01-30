@@ -1,0 +1,4 @@
+services:
+#    p3_site.example:
+#        class: P3\SiteBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
