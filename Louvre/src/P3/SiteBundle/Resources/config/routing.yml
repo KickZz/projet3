@@ -1,0 +1,3 @@
+p3_site_homepage:
+    path:     /
+    defaults: { _controller: P3SiteBundle:Default:index }
