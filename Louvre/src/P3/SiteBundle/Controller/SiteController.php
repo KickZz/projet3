@@ -5,14 +5,10 @@
 namespace P3\SiteBundle\Controller;
 
 use P3\SiteBundle\Entity\Expo;
+use P3\SiteBundle\Form\ExpoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SiteController extends Controller
 {
@@ -24,40 +20,69 @@ class SiteController extends Controller
     {
         return $this->render('P3SiteBundle:Site:condition.html.twig');
     }
-    public function AdminAction(Request $request)
+    public function adminAction(Request $request)
     {
         // On crée un objet Expo
         $expo = new Expo();
         
-        // On crée le formulaire grâce au service form factory
+        // On crée le formulaire grâce au service form factory en passant par le le formulaire ExpoType
         
-        $form = $this->get('form.factory')->createBuilder(FormType::class, $expo)
-            ->add('title', TextType::class)
-            ->add('datestart', DateType::class)
-            ->add('dateend', DateType::class)
-            ->add('content', TextareaType::class)
-            ->add('save', SubmitType::class)
-            ->getForm()
-        ;
+        $form = $this->createForm(ExpoType::class, $expo);
+            
         // Si la requête est en POST
-        if ($request->isMethod('POST')) {
-        // On fait le lien Requête <-> Formulaire
-        // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
-        $form->handleRequest($request);
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+      
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($expo);
+      $em->flush();
+            // Ajout d'un message pour confirmer l'ajout de l'annonce en BDD
+      $request->getSession()->getFlashBag()->add('notice', 'Exposition ajoutée.');
 
-        // On vérifie que les valeurs entrées sont correctes
-        // (Nous verrons la validation des objets en détail dans le prochain chapitre)
-            if ($form->isValid()) {
-            // On enregistre notre objet $advert dans la base de données, par exemple
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($expo);
-            $em->flush();
-            }
-        }
+      
+    }
         // On passe la méthode createView() du formulaire à la vue
         // afin qu'elle puisse afficher le formulaire toute seule
         return $this->render('P3SiteBundle:Site:admin.html.twig', array(
            'form' => $form->createView(),
         ));
     }
+    public function supprimerAction(Request $request)
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('P3SiteBundle:Expo');
+        
+        $listExpo = $repository->findAll();
+        
+        // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+    // Cela permet de protéger la suppression d'annonce contre cette faille
+    $form = $this->get('form.factory')->create();
+        
+        return $this->render('P3SiteBundle:Site:adminsupprimer.html.twig', array(
+                            'listExpo' => $listExpo,
+                            'form'   => $form->createView(),));
+    }
+    public function suppressionAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+    $expo = $em->getRepository('P3SiteBundle:Expo')->find($id);
+
+    if (null === $expo) {
+      throw new NotFoundHttpException("L'exposition d'id ".$id." n'existe pas.");
+    }
+
+    
+
+    if ($request->isMethod('POST')){
+      $em->remove($expo);
+      $em->flush();
+
+      $request->getSession()->getFlashBag()->add('info', "L'exposition a bien été supprimée.");
+
+      return $this->redirectToRoute('p3_site_adminsupprimer');
+    }
+    }
+    
 }

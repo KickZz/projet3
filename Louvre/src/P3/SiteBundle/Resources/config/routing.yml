@@ -10,3 +10,11 @@ p3_site_admin:
     path:     /admin
     defaults: 
         _controller: P3SiteBundle:Site:admin
+p3_site_adminsupprimer:
+    path:     /admin/supprimer
+    defaults: 
+        _controller: P3SiteBundle:Site:supprimer
+p3_site_adminsuppression:
+    path:     /admin/suppression/{id}
+    defaults: 
+        _controller: P3SiteBundle:Site:suppression
