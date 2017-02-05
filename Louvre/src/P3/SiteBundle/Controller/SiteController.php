@@ -84,5 +84,18 @@ class SiteController extends Controller
       return $this->redirectToRoute('p3_site_adminsupprimer');
     }
     }
+    public function carrouselAction(Request $request)
+  {
+    $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('P3SiteBundle:Expo');
+        
+        $listExpo = $repository->findAll();
+
+    return $this->render('P3SiteBundle:Site:carrousel.html.twig', array(
+      'listExpo' => $listExpo
+    ));
+  }
     
 }
