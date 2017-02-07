@@ -18,3 +18,8 @@ p3_site_adminsuppression:
     path:     /admin/suppression/{id}
     defaults: 
         _controller: P3SiteBundle:Site:suppression
+p3_site_coordonnees:
+    path:     /coordonnees/{id}
+    defaults: 
+        _controller: P3SiteBundle:Site:coordonnees
+        _fragment: billetterie
