@@ -2,6 +2,7 @@ p3_site_homepage:
     path:     /
     defaults: 
         _controller: P3SiteBundle:Site:index
+        _fragment: accueil
 p3_site_condition:
     path:     /conditions-generales-de-vente
     defaults: 
@@ -22,4 +23,9 @@ p3_site_coordonnees:
     path:     /coordonnees/{id}
     defaults: 
         _controller: P3SiteBundle:Site:coordonnees
+        _fragment: billetterie
+p3_site_paiement:
+    path:     /paiement
+    defaults: 
+        _controller: P3SiteBundle:Site:paiement
         _fragment: billetterie

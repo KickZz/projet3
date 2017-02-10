@@ -34,7 +34,9 @@
             </ul>
         </div>
     </div>
-{% block indexbody %} {% endblock %}
-
-
-{% endblock %}
+    {# On affiche tous les messages flash dont le nom est « notice » #} 
+{% for message in app.session.flashbag.get('paiement') %}
+    <div class="alert alert-info">Paiement : {{ message }}</div>
+    {% endfor %}
+</div>
+{% block indexbody %} {% endblock %} {% endblock %}

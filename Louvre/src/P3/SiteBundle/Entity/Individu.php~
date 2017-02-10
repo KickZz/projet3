@@ -20,20 +20,6 @@ class Individu
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="datevisite", type="date")
-     */
-    private $datevisite;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="type", type="array")
-     */
-    private $type;
 
     /**
      * @var string
@@ -64,13 +50,6 @@ class Individu
     private $datedenaissance;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    private $email;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="tarifreduit", type="boolean")
@@ -78,6 +57,11 @@ class Individu
     private $tarifreduit;
 
 
+    public function __construct()
+  {
+    
+    $this->datedenaissance = new \Datetime();
+  }
     /**
      * Get id
      *
@@ -185,30 +169,6 @@ class Individu
     }
 
     /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Individu
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
      * Set tarifreduit
      *
      * @param boolean $tarifreduit
@@ -231,4 +191,5 @@ class Individu
     {
         return $this->tarifreduit;
     }
+
 }

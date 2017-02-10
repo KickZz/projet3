@@ -1,1 +1,2 @@
-;$(function(){$('li>a').on('click',function(t){t.preventDefault();var o=this.hash;$('html, body').animate({scrollTop:$(this.hash).offset().top},1000,function(){window.location.hash=o})})});
+;$(function(){var e=$('#payment-form');e.submit(function(r){e.find('.submit').prop('disabled',!0);Stripe.card.createToken(e,stripeResponseHandler);return!1})});function stripeResponseHandler(n,r){var e=$('#payment-form');if(r.error){e.find('.payment-errors').text(r.error.message);e.find('.submit').prop('disabled',!1)}
+else{var t=r.id;e.append($('<input type="hidden" name="stripeToken">').val(t));e.get(0).submit()}};

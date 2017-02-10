@@ -38,7 +38,7 @@
                                 <div class="collapse navbar-collapse ">
                                     <ul class="nav navbar-nav">
                                         <li>
-                                            <a href="#accueil">Accueil</a>
+                                            <a href="{{ path( 'p3_site_homepage')}}">Accueil</a>
                                         </li>
                                         <li>
                                             <a href="#billetterie">Billetterie</a>
@@ -66,9 +66,13 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
     </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    {% endblock %} {% javascripts filter='?jsqueeze' 'bundles/p3site/js/site.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+        Stripe.setPublishableKey('pk_test_Ty4EdYYLfFFfkatOzAtrC24i');
+    </script>
+    {% endblock %} {% javascripts filter = 'jsqueeze' 'bundles/p3site/js/site.js' %}
+    <script type="text/javascript" src="{{ asset_url }}">
+    </script> {% endjavascripts %}
 
 </body>
 

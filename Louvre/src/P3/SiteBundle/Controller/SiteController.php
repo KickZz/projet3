@@ -7,9 +7,11 @@ namespace P3\SiteBundle\Controller;
 use P3\SiteBundle\Entity\Billet;
 use P3\SiteBundle\Entity\Individu;
 use P3\SiteBundle\Entity\Expo;
+use P3\SiteBundle\Entity\Liste;
 use P3\SiteBundle\Form\ExpoType;
 use P3\SiteBundle\Form\BilletType;
 use P3\SiteBundle\Form\IndividuType;
+use P3\SiteBundle\Form\ListeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -148,24 +150,24 @@ class SiteController extends Controller
 
         $billet = $em->find($id);
         $nbbillet = $billet->getNombrebillet();
-        // On crée un objet Individu
-        $individu = new Individu();
-            
-        for ($numerobillet = 1; $numerobillet <= $nbbillet;$numerobillet++)
+        $liste = new Liste();
+           
+        for ($i = 1; $i <= $nbbillet;$i++)
         {
+            // On crée un objet Individu
+            $individu = new Individu();
+            $liste->getIndividus()->add($individu);
             
-            
-            // On crée le formulaire grâce au service form factory en passant par le le formulaire IndividuType
-        
-        $form = $this->createForm(IndividuType::class, $individu);    
-        
-        
+               
         }
+        // On crée le formulaire grâce au service form factory en passant par le le formulaire IndividuType
+        $form = $this->createForm(ListeType::class, $liste);
         // Si la requête est en POST
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
       
       $em = $this->getDoctrine()->getManager();
-      $em->persist($individu);
+      $em->persist($liste);
+           
       $em->flush();
         
         
@@ -178,7 +180,41 @@ class SiteController extends Controller
         // afin qu'elle puisse afficher le formulaire toute seule
         return $this->render('P3SiteBundle:Site:coordonnees.html.twig', array(
            'form' => $form->createView(),
-            'listExpos' => $listExpos,
+           'listExpos' => $listExpos,
+        ));
+    }
+    public function paiementAction(Request $request)
+    {
+            $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('P3SiteBundle:Expo');
+        
+            $listExpos = $repository->findAll();
+            
+        if ($request->isMethod('POST'){
+            // Set your secret key: remember to change this to your live secret key in production
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            \Stripe::setApiKey("sk_test_r0EVQqmwZ84Vo16kM3CA6hLV")
+            
+            // Token is created using Stripe.js or Checkout!
+            // Get the payment token submitted by the form:
+            
+            $token = $_POST['stripeToken'];
+
+            // Charge the user's card:
+            $charge = \Stripe\Charge::create(array(
+            "amount" => 1000,
+            "currency" => "eur",
+            "description" => "Example charge",
+            "source" => $token,
+            ));
+            $request->getSession()->getFlashBag()->add('paiement', "Le paiement à bien été enregistré");
+
+            return $this->redirectToRoute('p3_site_homepage');
+        }
+        return $this->render('P3SiteBundle:Site:paiement.html.twig', array(
+           'listExpos' => $listExpos,
         ));
     }
 }
