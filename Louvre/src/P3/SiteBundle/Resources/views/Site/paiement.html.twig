@@ -1,13 +1,12 @@
 {% extends "P3SiteBundle:Site:index.html.twig" %} {% block indexbody %}
-</div>
 <div class="container">
     <div class="row">
         <div>
             <h2 id="billetterie">Billetterie</h2>
             <ul class="nav nav-pills">
-                <li><a href="{{ path('p3_site_homepage')}}">Commande</a></li>
-                <li><a href="">Coordonnées</a></li>
-                <li class="active"><a href="">Paiement</a></li>
+                <li><a class="disabled">Commande</a></li>
+                <li><a class="disabled">Coordonnées</a></li>
+                <li class="active"><a >Paiement</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active">{{ include("P3SiteBundle:Site:formpaiement.html.twig") }}</div>

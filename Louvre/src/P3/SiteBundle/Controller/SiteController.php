@@ -15,6 +15,8 @@ use P3\SiteBundle\Form\ListeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Constraints\DateTime;
+
 
 class SiteController extends Controller
 {
@@ -160,7 +162,7 @@ class SiteController extends Controller
             
                
         }
-        // On crée le formulaire grâce au service form factory en passant par le le formulaire IndividuType
+        // On crée le formulaire grâce au service form factory en passant par le le formulaire ListeType
         $form = $this->createForm(ListeType::class, $liste);
         // Si la requête est en POST
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -173,7 +175,9 @@ class SiteController extends Controller
         
         
     
-            return $this->redirectToRoute('p3_site_paiement');
+            return $this->redirectToRoute('p3_site_paiement', array
+                                          ('id' => $billet->getId(),
+                                           'idliste' => $liste->getId()));
            
     }
         // On passe la méthode createView() du formulaire à la vue
@@ -181,9 +185,10 @@ class SiteController extends Controller
         return $this->render('P3SiteBundle:Site:coordonnees.html.twig', array(
            'form' => $form->createView(),
            'listExpos' => $listExpos,
+           
         ));
     }
-    public function paiementAction(Request $request)
+    public function paiementAction($id, $idliste, Request $request)
     {
             $repository = $this
             ->getDoctrine()
@@ -191,23 +196,84 @@ class SiteController extends Controller
             ->getRepository('P3SiteBundle:Expo');
         
             $listExpos = $repository->findAll();
+        // On va chercher l'entity billet correspondant à la liste
+            $em = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('P3SiteBundle:Billet');
+        
+            $billet = $em->find($id);
+            $nbbillet = $billet->getNombrebillet();
+            $datevisite = $billet->getDatevisite();
+            $type = $billet->getType();
+        // On va chercher l'entity Liste correspondant à la commande
+            $em = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('P3SiteBundle:Liste');
+
+            $liste = $em->find($idliste);
+        // On va chercher les entités individu présentent dans la liste
+            $em = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('P3SiteBundle:individu');
+        
+            $individus = $liste->getIndividus();      
+            $total = 0 ;
+        foreach ($individus->toArray() as $individu)
+        {
             
-        if ($request->isMethod('POST'){
+            $idindividu = $individu->getId();
+
+            $personne = $em->find($idindividu);
+            $tarifreduit = $personne->getTarifreduit();
+            //aller chercher date de naissance et la comparer
+            $date = $personne->getDatedenaissance();
+            
+            //comparaison des dates
+            $age = $datevisite->diff($date)->format('%Y');
+            if ($tarifreduit != true)
+            {
+                
+                if ($age < 4){
+                    $cout = 0;
+                }
+                else if ($age >= 4 && $age < 12){
+                    $cout = 8;
+                }
+                else if ($age >= 12 && $age < 60){
+                    $cout = 16;
+                }
+                else if ($age >= 60){
+                    $cout = 12;
+                }
+                
+            }
+            else{
+                $cout = 10;
+            }
+            
+            
+          $total += $cout;  
+        }
+        // multiplication par 100 pour stripe
+        $total = $total*100;    
+        if ($request->isMethod('POST')){
             // Set your secret key: remember to change this to your live secret key in production
             // See your keys here: https://dashboard.stripe.com/account/apikeys
-            \Stripe::setApiKey("sk_test_r0EVQqmwZ84Vo16kM3CA6hLV")
-            
+            \Stripe\Stripe::setApiKey("sk_test_r0EVQqmwZ84Vo16kM3CA6hLV");
+
             // Token is created using Stripe.js or Checkout!
             // Get the payment token submitted by the form:
-            
             $token = $_POST['stripeToken'];
 
             // Charge the user's card:
             $charge = \Stripe\Charge::create(array(
-            "amount" => 1000,
-            "currency" => "eur",
-            "description" => "Example charge",
-            "source" => $token,
+                "amount" => $total,
+                "currency" => "eur",
+                "description" => "Example charge",
+                "source" => $token,
             ));
             $request->getSession()->getFlashBag()->add('paiement', "Le paiement à bien été enregistré");
 
@@ -215,6 +281,8 @@ class SiteController extends Controller
         }
         return $this->render('P3SiteBundle:Site:paiement.html.twig', array(
            'listExpos' => $listExpos,
+           'id' => $id,
+           'idliste' => $idliste,  
         ));
     }
 }

@@ -4,6 +4,7 @@ namespace P3\SiteBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Liste
@@ -31,6 +32,7 @@ class Liste
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Email()
      */
     private $email;
     

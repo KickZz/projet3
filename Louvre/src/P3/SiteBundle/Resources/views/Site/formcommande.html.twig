@@ -1,3 +1,62 @@
 <div class="well">
-    {{ form(form) }}
+    {{ form_start(form) }}
+    
+    {# Les erreurs générales du formulaire. #}
+  {{ form_errors(form) }}
+<div class="form-group">
+  {# Génération du label. #}
+  {{ form_label(form.datevisite, "Date de visite", {'label_attr':{'class':'control-label'}}) }}
+    
+  {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.datevisite) }}
+    
+    <div class="form-inline">
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.datevisite.day, {'attr': {'class': 'form-control'}}) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.datevisite.month, {'attr': {'class': 'form-control'}}) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.datevisite.year, {'attr': {'class': 'form-control'}}) }}
+        
+    </div>
+</div>
+<div class="form-group">
+  {# Génération du label. #}
+  {{ form_label(form.type, "Choix du billet", {'label_attr':{'class':'control-label'}}) }}
+    
+  {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.type) }}
+           
+    {# Génération de l'input. #}
+    {{ form_widget(form.type)}}
+        
+        
+        
+    
+</div>
+<div class="form-group">
+  {# Génération du label. #}
+  {{ form_label(form.nombrebillet, "Nombre de billet(s) souhaité(s)", {'label_attr':{'class':'control-label'}}) }}
+    
+  {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.nombrebillet) }}
+            
+    {# Génération de l'input. #}
+    {{ form_widget(form.nombrebillet, {'attr': {'class': 'form-control'}}) }}
+
+</div>
+<div class="form-group">
+    {{ form_widget(form.Suivant, {'attr': {'class': 'btn btn-primary'}}) }}
+ 
+</div>
+    {# Génération automatique des champs pas encore écrits.
+     
+  {{ form_rest(form) }}
+
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
+
 </div>

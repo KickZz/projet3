@@ -21,7 +21,7 @@ class IndividuType extends AbstractType
             'expanded' => false,
             'multiple' => false))
             ->add('datedenaissance', BirthdayType::class)
-            ->add('tarifreduit')        ;
+            ->add('tarifreduit')      ;
     }
     
     /**

@@ -3,6 +3,7 @@
 namespace P3\SiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Individu
@@ -25,6 +26,7 @@ class Individu
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotNull
      */
     private $nom;
 
@@ -32,6 +34,7 @@ class Individu
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255)
+     * @Assert\NotNull
      */
     private $prenom;
 
@@ -46,6 +49,7 @@ class Individu
      * @var \DateTime
      *
      * @ORM\Column(name="datedenaissance", type="date")
+     * @Assert\DateTime()
      */
     private $datedenaissance;
 

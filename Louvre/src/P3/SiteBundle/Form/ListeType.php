@@ -19,7 +19,7 @@ class ListeType extends AbstractType
         $builder->add('individus', CollectionType::class, array(
         'entry_type'   => IndividuType::class))
             ->add('email', EmailType::class)
-            ->add('save', SubmitType::class);
+            ->add('Suivant', SubmitType::class);
     }
     
     /**

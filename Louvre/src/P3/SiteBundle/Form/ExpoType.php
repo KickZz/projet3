@@ -20,8 +20,8 @@ class ExpoType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('datestart')
-            ->add('dateend')
+            ->add('datestart', DateType::class)
+            ->add('dateend', DateType::class)
             ->add('image', ImageType::class)
             ->add('content')
             ->add('save', SubmitType::class);

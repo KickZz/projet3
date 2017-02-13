@@ -3,6 +3,7 @@
 namespace P3\SiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Expo
@@ -25,6 +26,7 @@ class Expo
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotNull
      */
     private $title;
 
@@ -32,6 +34,7 @@ class Expo
      * @var \DateTime
      *
      * @ORM\Column(name="datestart", type="date")
+     * @Assert\DateTime()
      */
     private $datestart;
 
@@ -39,11 +42,13 @@ class Expo
      * @var \DateTime
      *
      * @ORM\Column(name="dateend", type="date")
+     * @Assert\DateTime()
      */
     private $dateend;
     
     /**
      * @ORM\OneToOne(targetEntity="P3\SiteBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Image(minWidth=1280, maxWidth=1280, minHeight=600, maxHeight=600)
      */
     private $image;
     

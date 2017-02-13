@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class BilletType extends AbstractType
 {
@@ -15,7 +16,7 @@ class BilletType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('datevisite')
+        $builder->add('datevisite', DateType::class)
             ->add('type', ChoiceType::class, array (
             'choices' => array(
             'Journée' => true,
@@ -23,7 +24,7 @@ class BilletType extends AbstractType
             'expanded' => true,
             'multiple' => false))
             ->add('nombrebillet')
-            ->add('save', SubmitType::class)       ;
+            ->add('Suivant', SubmitType::class)       ;
     }
     
     /**

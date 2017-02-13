@@ -4,6 +4,7 @@ namespace P3\SiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Image
@@ -27,6 +28,7 @@ class Image
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\Url()
      */
     private $url;
 
@@ -39,6 +41,7 @@ class Image
 
     /**
      * @var UploadedFile
+     * @Assert\File()
      */
     private $file;
     

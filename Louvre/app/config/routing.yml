@@ -1,4 +1,41 @@
 p3_site:
     resource: "@P3SiteBundle/Resources/config/routing.yml"
     prefix:   /
+    
 
+login:
+    path: /admin/login
+    defaults:
+        _controller: FOSUserBundle:Security:login
+logout:
+    path: /admin/logout
+    defaults:
+        _controller: FOSUserBundle:Security:logout
+check:
+    path: /admin/login_check
+    defaults:
+        _controller: FOSUserBundle:Security:check
+
+# Manage security
+fos_user_security:
+    resource:  "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /
+# User Profil
+fos_user_profile:
+    resource:  "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /admin/profile
+
+# Register User
+fos_user_register:
+    resource:  "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /admin/register
+
+# Reset User password
+fos_user_resetting:
+    resource:  "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /admin/resetPassword
+
+# Change User password
+fos_user_change_password:
+    resource:  "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /admin/changePassword

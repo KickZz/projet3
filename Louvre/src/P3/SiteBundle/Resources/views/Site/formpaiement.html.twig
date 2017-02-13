@@ -1,35 +1,43 @@
-<form action="{{ path('p3_site_paiement') }}" method="POST" id="payment-form">
+<div class="well">
+<form action="{{ path('p3_site_paiement',{'id' : id , 'idliste' : idliste})}}" method="POST" id="payment-form">
     <span class="payment-errors"></span>
 
-    <div class="form-row">
+    <div class="form-group">
         <label>
-            <span>Card Number</span>
-            <input type="text" size="20" data-stripe="number">
+            <span class="control-label">Numéro de carte</span>
         </label>
+            <input type="text" size="20" data-stripe="number" class="form-control">
+        
     </div>
 
-    <div class="form-row">
+    <div class="form-group">
         <label>
-            <span>Expiration (MM/YY)</span>
-            <input type="text" size="2" data-stripe="exp_month">
+            <span class="control-label">Expiration (MM/AA)</span>
         </label>
-        <span> / </span>
-        <input type="text" size="2" data-stripe="exp_year">
+            <div class="form-inline">
+                <input type="text" size="2" data-stripe="exp_month" class="form-control">
+        
+                <span class="control-label"> / </span>
+                <input type="text" size="2" data-stripe="exp_year" class="form-control">
+            </div>
     </div>
 
-    <div class="form-row">
+    <div class="form-group">
         <label>
-            <span>CVC</span>
-            <input type="text" size="4" data-stripe="cvc">
+            <span class="control-label">Cryptogramme visuel</span>
         </label>
+            <input type="text" size="4" data-stripe="cvc" class="form-control" >
+        
     </div>
 
-    <div class="form-row">
+    <div class="form-group">
         <label>
-            <span>Billing Postal Code</span>
-            <input type="text" size="6" data-stripe="address_zip">
+            <span class="control-label">Code Postal</span>
         </label>
+            <input type="text" size="6" data-stripe="address_zip" class="form-control">
+        
     </div>
 
-    <input type="submit" class="submit" value="Submit Payment">
+    <input type="submit" class="submit btn btn-primary" value="Paiement">
 </form>
+</div>
