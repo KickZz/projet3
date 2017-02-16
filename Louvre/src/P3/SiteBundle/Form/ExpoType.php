@@ -24,7 +24,7 @@ class ExpoType extends AbstractType
             ->add('dateend', DateType::class)
             ->add('image', ImageType::class)
             ->add('content')
-            ->add('save', SubmitType::class);
+            ->add('Ajouter', SubmitType::class);
     }
     
     /**

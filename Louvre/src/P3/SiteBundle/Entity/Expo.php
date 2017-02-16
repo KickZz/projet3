@@ -48,7 +48,6 @@ class Expo
     
     /**
      * @ORM\OneToOne(targetEntity="P3\SiteBundle\Entity\Image", cascade={"persist", "remove"})
-     * @Assert\Image(minWidth=1280, maxWidth=1280, minHeight=600, maxHeight=600)
      */
     private $image;
     

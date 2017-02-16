@@ -1,17 +1,32 @@
-{% extends "P3SiteBundle::layout.html.twig" %} {% block body %}
-
-<h2>Supprimer une Exposition</h2> {# On affiche tous les messages flash dont le nom est « info » #} {% for message in app.session.flashbag.get('info') %}
-<div class="alert alert-info">Info : {{ message }}</div>
-{% endfor %} {% for expo in listExpo %}
-<div class="row">
-    <div class="well">
-        <h3 class="col-md-5">{{ expo.title }}</h3>
-        <div class="col-md-4">Du : {{ expo.datestart|date("m/d/Y") }} au : {{ expo.dateend|date("m/d/Y") }}</div>
-        {# On met l'id de l'annonce dans la route de l'action du formulaire #}
-        <form action="{{ path('p3_site_adminsuppression', {'id': expo.id}) }}" method="post">
-            <input type="submit" value="Supprimer" class="btn btn-danger " /> {# Ceci va générer le champ CSRF #} {{ form_rest(form) }}
-        </form>
+{% extends "P3CoreBundle::layout.html.twig" %} {% block body %}
+<div class="container">
+    <div class="row">
+        <div>
+            <h2>Supprimer une Exposition</h2>
+            <ul class="nav nav-pills">
+                <li><a href="{{ path('p3_site_admin')}}">Ajouter une exposition</a></li>
+                <li class="active"><a>Supprimer une annonce</a></li>
+            </ul>
+            <div class="tab-content">
+                {# On affiche tous les messages flash dont le nom est « info » #} 
+                {% for message in app.session.flashbag.get('info') %}
+                <div class="alert alert-info">Info : {{ message }}</div>
+                {% endfor %} 
+                {% for expo in listExpo %}
+                <div class="row">
+                    <div class="well">
+                        <h3 class="col-md-5">{{ expo.title }}</h3>
+                        <div class="col-md-4">Du : {{ expo.datestart|date("m/d/Y") }} au : {{ expo.dateend|date("m/d/Y") }}</div>
+                        {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+                        <form action="{{ path('p3_site_adminsuppression', {'id': expo.id}) }}" method="post">
+                            <input type="submit" value="Supprimer" class="btn btn-danger " /> {# Ceci va générer le champ CSRF #} {{ form_rest(form) }}
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 </br>
-{% endfor %} {% endblock %}
+ {% endblock %}

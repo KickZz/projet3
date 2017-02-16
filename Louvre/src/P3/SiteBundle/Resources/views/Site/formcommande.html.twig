@@ -27,13 +27,22 @@
   {# Génération du label. #}
   {{ form_label(form.type, "Choix du billet", {'label_attr':{'class':'control-label'}}) }}
     
-  {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.type) }}
-           
-    {# Génération de l'input. #}
-    {{ form_widget(form.type)}}
-        
-        
+    
+       {% for type in form.type%}
+    
+          <div class="radio"> 
+              <label>
+                {# Génération de l'input. #}
+                {{ form_widget(type) }}
+               
+                {# Génération du label. #}
+                {{ form_label(type) }}
+              </label>       
+            </div>  
+         
+       {% endfor %}
+     {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.type) }}
         
     
 </div>

@@ -41,7 +41,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
-        - 'bootstrap_3_layout.html.twig'
+      #  - 'bootstrap_3_layout.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -67,11 +67,13 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
+    #transport: gmail
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+# Assetic configuration
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
@@ -80,6 +82,7 @@ assetic:
       jsqueeze:   ~
       scssphp:
         formatter: 'Leafo\ScssPhp\Formatter\Compressed'
+# FOSuser Configuration
 fos_user:
     db_driver:     orm                       # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
     firewall_name: main                      # Le nom du firewall derrière lequel on utilisera ces utilisateurs

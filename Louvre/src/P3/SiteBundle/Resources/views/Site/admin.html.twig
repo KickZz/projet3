@@ -1,7 +1,21 @@
-{% extends "P3SiteBundle::layout.html.twig" %} {% block body %}
+{% extends "P3CoreBundle::layout.html.twig" %} {% block body %}
+<div class="container">
+    <div class="row">
+        <div>
+            <h2>Ajouter une Exposition</h2>
+            <ul class="nav nav-pills">
+                <li class="active"><a>Ajouter une exposition</a></li>
+                <li><a href="{{ path('p3_site_adminsupprimer')}}">Supprimer une annonce</a></li>
+            </ul>
+            <div class="tab-content">
+                
+                {# On affiche tous les messages flash dont le nom est « notice » #} 
+                {% for message in app.session.flashbag.get('notice')%}
+                <div class="alert alert-info">Info : {{ message }}</div>
+                {% endfor %} {{ include("P3SiteBundle:Site:formajout.html.twig") }} 
 
-<h2>Ajouter une Exposition</h2> 
-{# On affiche tous les messages flash dont le nom est « notice » #} {% for message in app.session.flashbag.get('notice') %}
-<div class="alert alert-info">Info : {{ message }}</div>
-{% endfor %} 
-{{ include("P3SiteBundle:Site:formajout.html.twig") }} {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

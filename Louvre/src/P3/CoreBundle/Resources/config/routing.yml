@@ -1,0 +1,4 @@
+p3_core_homepage:
+    path:     /
+    defaults: 
+        _controller: P3CoreBundle:Core:index

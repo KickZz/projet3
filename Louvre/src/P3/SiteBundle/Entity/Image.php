@@ -41,7 +41,6 @@ class Image
 
     /**
      * @var UploadedFile
-     * @Assert\File()
      */
     private $file;
     

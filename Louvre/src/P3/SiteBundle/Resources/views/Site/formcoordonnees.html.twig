@@ -57,17 +57,16 @@
     
     </div>
     <div class="form-group">
+    
+    
     {# Génération du label. #}
     {{ form_label(individu.tarifreduit, "Tarif réduit ", {'label_attr':{'class':'control-label'}}) }}
-    
     {# Affichage des erreurs pour ce champ précis. #}
     {{ form_errors(individu.tarifreduit) }}
-           
+    
     {# Génération de l'input. #}
     {{ form_widget(individu.tarifreduit)}}
-        
-        
-    
+   
     </div>
 {% endfor %}
     <div class="form-group">

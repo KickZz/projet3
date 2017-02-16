@@ -1,4 +1,4 @@
-{% extends "P3SiteBundle::layout.html.twig" %} {% block body %}
+{% extends "P3CoreBundle::layout.html.twig" %} {% block body %}
 
 <div class="container">
 
@@ -20,7 +20,7 @@
                 <li>Samedi : 9h à 19h</br>
                 </li>
             </ul>
-            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span><em> Fermé le Mardi, le Dimanche, les jours fériés (1er mai, 1er Novembre et 25 Décembre)</em>
+            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span><em> Fermé le Mardi, le Dimanche, les jours fériés (1er Mai, 1er Novembre et 25 Décembre)</em>
 
 
         </div>
@@ -36,7 +36,7 @@
     </div>
     {# On affiche tous les messages flash dont le nom est « notice » #} 
 {% for message in app.session.flashbag.get('paiement') %}
-    <div class="alert alert-info">Paiement : {{ message }}</div>
+    <div class="alert alert-info">{{ message }}</div>
     {% endfor %}
 </div>
 {% block indexbody %} {% endblock %} {% endblock %}

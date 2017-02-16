@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new P3\UserBundle\P3UserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new P3\CoreBundle\P3CoreBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

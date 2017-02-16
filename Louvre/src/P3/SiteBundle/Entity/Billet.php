@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @ORM\Table(name="billet")
  * @ORM\Entity(repositoryClass="P3\SiteBundle\Repository\BilletRepository")
- * @Assert\Callback({"P3\SiteBundle\Validator\Validatetype", "Type"})
  */
 class Billet
 {
@@ -50,10 +49,13 @@ class Billet
     private $nombrebillet;
 
 
-    
-    public function validateType(ExecutionContextInterface $context, $payload)
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
     {
-    // verification de l'heure 
+    // verification de l'heure
+        
         $date = $this->getDatevisite();
         $today = new \DateTime();
         $choix = $this->getType();
@@ -62,7 +64,7 @@ class Billet
             if ($date == $today){
                 if ($heure >= 7){
                     $context
-                        ->buildViolation("Impossible de commander un billet 'Journée' après 14h pour le joue même")
+                        ->buildViolation("Impossible de commander un billet 'Journée' après 14h pour le jour même")
                         ->atPath('type')
                         ->addViolation();
                 }

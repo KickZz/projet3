@@ -20,43 +20,21 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 class SiteController extends Controller
 {
-    public function indexAction(Request $request)
-    {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('P3SiteBundle:Expo');
         
-        $listExpos = $repository->findAll();
-        
-                    // On crée un objet Billet
-        $billet = new Billet();
-        
-        // On crée le formulaire grâce au service form factory en passant par le le formulaire BilletType
-        
-        $form = $this->createForm(BilletType::class, $billet);    
-        // Si la requête est en POST
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            
-            $em = $this->getDoctrine()->getManager();
-      $em->persist($billet);
-      $em->flush();
-    
-            return $this->redirectToRoute('p3_site_coordonnees', array
-                                          ('id' => $billet->getId()));
-           
-    }
-        // On passe la méthode createView() du formulaire à la vue
-        // afin qu'elle puisse afficher le formulaire toute seule
-        return $this->render('P3SiteBundle:Site:commande.html.twig', array(
-           'form' => $form->createView(),
-            'listExpos' => $listExpos,
-        ));
-    }
-    
     public function conditionAction()
     {
         return $this->render('P3SiteBundle:Site:condition.html.twig');
+    }
+    public function ficheAction($id, Request $request)
+    {
+        $em = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('P3SiteBundle:Expo');
+
+        $expo = $em->find($id);
+        return $this->render('P3SiteBundle:Site:fiche.html.twig', array(
+        'expo' => $expo));
     }
     public function adminAction(Request $request)
     {
@@ -219,8 +197,10 @@ class SiteController extends Controller
             ->getManager()
             ->getRepository('P3SiteBundle:individu');
         
-            $individus = $liste->getIndividus();      
+            $individus = $liste->getIndividus();
+            $email = $liste->getEmail();
             $total = 0 ;
+            
         foreach ($individus->toArray() as $individu)
         {
             
@@ -233,13 +213,13 @@ class SiteController extends Controller
             
             //comparaison des dates
             $age = $datevisite->diff($date)->format('%Y');
-            if ($tarifreduit != true)
-            {
-                
-                if ($age < 4){
+            if ($age < 4){
                     $cout = 0;
-                }
-                else if ($age >= 4 && $age < 12){
+            }
+            else if ($tarifreduit != true)
+            {
+    
+                if ($age >= 4 && $age < 12){
                     $cout = 8;
                 }
                 else if ($age >= 12 && $age < 60){
@@ -250,7 +230,7 @@ class SiteController extends Controller
                 }
                 
             }
-            else{
+            else if ($tarifreduit == true){
                 $cout = 10;
             }
             
@@ -258,8 +238,9 @@ class SiteController extends Controller
           $total += $cout;  
         }
         // multiplication par 100 pour stripe
-        $total = $total*100;    
-        if ($request->isMethod('POST')){
+        $total = $total*100;
+        if ($total > 0){
+         if ($request->isMethod('POST')){
             // Set your secret key: remember to change this to your live secret key in production
             // See your keys here: https://dashboard.stripe.com/account/apikeys
             \Stripe\Stripe::setApiKey("sk_test_r0EVQqmwZ84Vo16kM3CA6hLV");
@@ -275,14 +256,44 @@ class SiteController extends Controller
                 "description" => "Example charge",
                 "source" => $token,
             ));
-            $request->getSession()->getFlashBag()->add('paiement', "Le paiement à bien été enregistré");
+            //Envoi de l'email de confirmation
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Vos Billets')
+                ->setFrom('symfonyprojet@gmail.com')
+                ->setTo($email)
+                ->setBody($this->renderView(
+                    'P3SiteBundle:Site:email.html.twig',
+                    array(
+                        'individus' => $individus)),
+                          'text/html');
 
-            return $this->redirectToRoute('p3_site_homepage');
+            $this->get('mailer')->send($message);
+            $request->getSession()->getFlashBag()->add('paiement', "Le paiement à bien été enregistré, retrouvez vos billets à l'adresse mail renseignée");
+
+            return $this->redirectToRoute('p3_core_homepage');
+         }
+        }
+        else if ($total == 0){
+            //Envoi de l'email de confirmation
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Vos Billets')
+                ->setFrom('symfonyprojet@gmail.com')
+                ->setTo($email)
+                ->setBody($this->renderView(
+                    'P3SiteBundle:Site:email.html.twig',
+                    array(
+                        'individus' => $individus)),
+                          'text/html');
+
+            $this->get('mailer')->send($message);
+            $request->getSession()->getFlashBag()->add('paiement', "Votre commande à bien été enregistrée, retrouvez vos billets à l'adresse mail renseignée");
+
+            return $this->redirectToRoute('p3_core_homepage');
         }
         return $this->render('P3SiteBundle:Site:paiement.html.twig', array(
            'listExpos' => $listExpos,
            'id' => $id,
-           'idliste' => $idliste,  
+           'idliste' => $idliste,
         ));
     }
 }

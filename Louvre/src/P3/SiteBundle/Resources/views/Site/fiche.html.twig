@@ -1,0 +1,10 @@
+{% extends "P3CoreBundle::layout.html.twig" %}
+{% block body %}
+<div class="well">
+{{ expo.title }}
+{{ expo.datestart|date("m/d/Y") }}
+{{ expo.dateend|date("m/d/Y") }}
+{{ expo.content }}
+</div>
+{% endblock %}
+     
