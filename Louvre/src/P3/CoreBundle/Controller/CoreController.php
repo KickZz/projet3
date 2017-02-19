@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 
+
 class CoreController extends Controller
 {
 public function indexAction(Request $request)
@@ -28,7 +29,6 @@ public function indexAction(Request $request)
             ->getRepository('P3SiteBundle:Expo');
         
         $listExpos = $repository->findAll();
-        
                     // On crée un objet Billet
         $billet = new Billet();
         
@@ -51,6 +51,7 @@ public function indexAction(Request $request)
         return $this->render('P3SiteBundle:Site:commande.html.twig', array(
            'form' => $form->createView(),
             'listExpos' => $listExpos,
+            
         ));
     }
 }

@@ -5,7 +5,7 @@
 
 {# Dans notre layout, il faut définir le block body #}
 {% block connection %}
-
+ <div class="col-xs-offset-2 col-xs-8 col-sm-offset-8 col-sm-3 col-md-offset-2 col-md-8">
   {# On affiche les messages flash que définissent les contrôleurs du bundle #}
   {% for key, messages in app.session.flashbag.all() %}
     {% for message in messages %}
@@ -18,5 +18,5 @@
   {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
   {% block fos_user_content %}
   {% endblock fos_user_content %}
-
+</div>
 {% endblock %}

@@ -1,0 +1,35 @@
+@media screen and (min-width: 1200px){
+    .navbar{
+    width: 225px;
+}
+    #imgfiche{
+       max-height: 200px;
+    }
+}
+.row{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+#expo{
+  font-size: 25px;
+}
+@media screen and (max-width: 991px){
+    #imgfiche{
+       max-height: 200px;
+        max-width: 100%;
+    }
+}
+@media screen and (max-width: 767px){
+    .navbar{
+    padding-top: 20px;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+    #imgfiche{
+       max-height: 200px;
+        max-width: 100%;
+    }
+}
+#erreur{
+    color: firebrick;
+}

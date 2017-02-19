@@ -48,34 +48,9 @@ class Billet
      */
     private $nombrebillet;
 
-
-    /**
-     * @Assert\Callback
-     */
-    public function validate(ExecutionContextInterface $context, $payload)
-    {
-    // verification de l'heure
-        
-        $date = $this->getDatevisite();
-        $today = new \DateTime();
-        $choix = $this->getType();
-        $heure = $today->format('H');
-        if ($choix == true){
-            if ($date == $today){
-                if ($heure >= 7){
-                    $context
-                        ->buildViolation("Impossible de commander un billet 'Journée' après 14h pour le jour même")
-                        ->atPath('type')
-                        ->addViolation();
-                }
-            }
-            
-            }
-        
-    }
     public function __construct()
     {
-    $this->datevisite = new \Datetime();
+    $this->datevisite = new \Datetime('now',new \DateTimeZone('Europe/Paris'));
     }
     /**
      * Get id
@@ -157,5 +132,35 @@ class Billet
     public function getNombrebillet()
     {
         return $this->nombrebillet;
+    }
+    /**
+     * @Assert\Callback
+     */
+    public function isTypeValid(ExecutionContextInterface $context, $payload)
+    {
+    // verification de l'heure
+        
+        $date = $this->getDatevisite();
+        $today = new \DateTime('now',new \DateTimeZone('Europe/Paris'));     
+        $heure = $today->format('H');
+        $choix = $this->getType();
+        if ($choix == true){
+            if ($date->format('%Y') == $today->format('%Y')) {
+                if ($date->format('%m') == $today->format('%m')) {
+                    if ($date->format('%d') == $today->format('%d')){
+            
+                        if ($heure >= 14){
+                            $context
+                                ->buildViolation("Impossible de commander un billet 'Journée' après 14h pour le jour même")
+                                ->atPath('type')
+                                ->addViolation()
+                            ;
+                        }
+                    }
+            
+                }
+        
+            }
+        }
     }
 }
