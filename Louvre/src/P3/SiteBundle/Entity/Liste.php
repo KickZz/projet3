@@ -58,7 +58,7 @@ class Liste
      *
      * @return Liste
      */
-    public function addIndividus(\OC\PlatformBundle\Entity\Category $individus)
+    public function addIndividus(\P3\SiteBundle\Entity\Individu $individus)
     {
         $this->individus[] = $individus;
 
@@ -70,7 +70,7 @@ class Liste
      *
      * @param \P3\SiteBundle\Entity\Individu $individus
      */
-    public function removeIndividus(\OC\PlatformBundle\Entity\Category $individus)
+    public function removeIndividus(\P3\SiteBundle\Entity\Individu $individus)
     {
         $this->individus->removeElement($individus);
     }

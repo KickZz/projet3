@@ -26,7 +26,7 @@ class Individu
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
-     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $nom;
 
@@ -34,7 +34,7 @@ class Individu
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255)
-     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $prenom;
 

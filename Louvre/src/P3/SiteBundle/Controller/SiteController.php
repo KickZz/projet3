@@ -294,6 +294,7 @@ class SiteController extends Controller
            'listExpos' => $listExpos,
            'id' => $id,
            'idliste' => $idliste,
+           'total' => $total,
         ));
     }
 }

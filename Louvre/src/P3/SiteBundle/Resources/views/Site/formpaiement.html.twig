@@ -1,4 +1,5 @@
 <div class="well">
+    <h3>Montant Total : {{ total/100 }}€</h3>
 <form action="{{ path('p3_site_paiement',{'id' : id , 'idliste' : idliste})}}" method="POST" id="payment-form">
     <span class="payment-errors"></span>
 
