@@ -43,8 +43,9 @@ class DatecorrectValidator extends ConstraintValidator
     $date = new \DateTime("05/01/2017");
     $date2 = new \DateTime("11/01/2017");
     $date3 = new \DateTime("12/25/2017");
-    $date4 = new \DateTime();
+    $date4 = new \DateTime('now',new \DateTimeZone('Europe/Paris'));
     $jour = $value->format('N');
+    $heure = $date4->format('H');
     // Test pour savoir si la date est correcte
     if ($value->format('%Y') < $date4->format('%Y')) {
         $this->context->addViolation($constraint->message);
@@ -58,6 +59,16 @@ class DatecorrectValidator extends ConstraintValidator
        if ($value->format('%m') == $date4->format('%m')) {
             if ($value->format('%d') < $date4->format('%d')) {
                 $this->context->addViolation($constraint->message);
+            }
+    }
+    }
+    if ($value->format('%Y') == $date4->format('%Y')) {
+       if ($value->format('%m') == $date4->format('%m')) {
+            if ($value->format('%d') == $date4->format('%d')) {
+                if ($heure >= 19){
+                            $this->context->addViolation($constraint->message4);
+                        }
+                
             }
     }
     }

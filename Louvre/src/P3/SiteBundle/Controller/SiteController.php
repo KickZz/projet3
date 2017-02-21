@@ -184,6 +184,7 @@ class SiteController extends Controller
             $nbbillet = $billet->getNombrebillet();
             $datevisite = $billet->getDatevisite();
             $type = $billet->getType();
+            $idbillet = $billet->getId();
         // On va chercher l'entity Liste correspondant à la commande
             $em = $this
             ->getDoctrine()
@@ -264,7 +265,11 @@ class SiteController extends Controller
                 ->setBody($this->renderView(
                     'P3SiteBundle:Site:email.html.twig',
                     array(
-                        'individus' => $individus)),
+                        'individus' => $individus,
+                        'nombre' => $nbbillet,
+                        'date' => $datevisite,
+                        'tarif' => $total,
+                        'id' => $idbillet)),
                           'text/html');
 
             $this->get('mailer')->send($message);
@@ -282,7 +287,11 @@ class SiteController extends Controller
                 ->setBody($this->renderView(
                     'P3SiteBundle:Site:email.html.twig',
                     array(
-                        'individus' => $individus)),
+                        'individus' => $individus,
+                        'nombre' => $nbbillet,
+                        'date' => $datevisite,
+                        'tarif' => $total,
+                        'id' => $idbillet)),
                           'text/html');
 
             $this->get('mailer')->send($message);

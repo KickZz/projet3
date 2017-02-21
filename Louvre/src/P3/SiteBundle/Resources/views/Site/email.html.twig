@@ -7,10 +7,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
     </head>
 <body>
-    <div>bonjour</div>
+    <div><h3>Nombre de Billet(s) : {{ nombre }}</h3></br>
+    Date de visite : {{ date }}</br>
+    Tarif : {{ tarif }}</br>
+    </div>
+    Code : {{ id }}{{ date }}{% for individu in individus %}{{individu.nom}}{% endfor %}{{ tarif }}</br></br>
+    <div>{% for individu in individus %}
+        {{individu.nom}}</br>
+        {{individu.prenom}}</br>
+        {{individu.tarifreduit}}</br></br>
+        {{individu.nom}}</br>
+        {{individu.prenom}}</br>
+        {{individu.tarifreduit}}</br></br>
+    {% endfor %}
+    </div>
     </body>
 <footer>
-    
+    <div class="col-md-offset-4 col-md-4 ">
+                    <img src="{{asset ('bundles/p3core/images/logo.png')}}" alt="Louvre">
+                </div>
     </footer>
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
