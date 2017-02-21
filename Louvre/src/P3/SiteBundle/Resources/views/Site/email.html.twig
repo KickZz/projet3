@@ -8,10 +8,10 @@
     </head>
 <body>
     <div><h3>Nombre de Billet(s) : {{ nombre }}</h3></br>
-    Date de visite : {{ date }}</br>
+    Date de visite : {{ date|date("d/m/Y") }}</br>
     Tarif : {{ tarif }}</br>
     </div>
-    Code : {{ id }}{{ date }}{% for individu in individus %}{{individu.nom}}{% endfor %}{{ tarif }}</br></br>
+    Code : {{ id }}{{ date|date("d/m/Y") }}{% for individu in individus %}{{individu.nom}}{% endfor %}{{ tarif }}</br></br>
     <div>{% for individu in individus %}
         {{individu.nom}}</br>
         {{individu.prenom}}</br>

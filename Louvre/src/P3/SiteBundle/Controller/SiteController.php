@@ -248,7 +248,7 @@ class SiteController extends Controller
 
             // Token is created using Stripe.js or Checkout!
             // Get the payment token submitted by the form:
-            $token = $_POST['stripeToken'];
+            $token = $request->request->get('stripeToken');
 
             // Charge the user's card:
             $charge = \Stripe\Charge::create(array(
