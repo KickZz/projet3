@@ -1,0 +1,30 @@
+{# Ce template n'hérite de personne, tout comme le template inclus avec {{ include() }}. #}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="">
+            <div id="carousel" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    {% for expo in listExpo %}
+                    <li data-target="#carousel" data-slide-to="{{ loop.index-1 }}" class="{%if loop.index == 1%} active {%endif%}"></li>
+                    {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for expo in listExpo %}
+                    <div class="item {%if loop.index == 1%} active {%endif%}">
+                        <a href="{{path ('p3_site_fiche', {'id': expo.id}) }}"><img alt="{{ expo.image.alt }}" src="{{ asset(expo.image.webPath) }}"></a>
+                        <h2 class="carousel-caption">{{ expo.title }}</h2>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a class="left carousel-control" href="#carousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

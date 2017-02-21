@@ -1,0 +1,40 @@
+{% extends "P3CoreBundle::layout.html.twig" %}
+{% block head %}
+<meta name="robots" content="noindex" >
+{% endblock %} 
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div>
+            <h2>Supprimer une Exposition</h2>
+            <ul class="nav nav-pills nav-justified">
+                <li><a href="{{ path('p3_site_admin')}}">Ajouter une exposition</a></li>
+                <li class="active"><a>Supprimer une annonce</a></li>
+            </ul>
+            <div class="tab-content">
+                {# On affiche tous les messages flash dont le nom est « info » #} 
+                {% for message in app.session.flashbag.get('info') %}
+                <div class="alert alert-info">Info : {{ message }}</div>
+                {% endfor %} 
+                {% for expo in listExpo %}
+                <div class="row" >
+                    <div class="well">
+                        <div id="expo" class="col-sm-5 col-md-5">
+                            {{ expo.title }}
+                        </div>
+                        <div id="expo" class="col-sm-5 col-md-5" >
+                         Du : {{ expo.datestart|date("d/m/Y") }} au : {{ expo.dateend|date("d/m/Y") }}
+                        </div>
+                        {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+                        <form action="{{ path('p3_site_adminsuppression', {'id': expo.id}) }}" method="post">
+                            <input type="submit" value="Supprimer" class="btn btn-danger col-xs-offset-1 col-md-offset-0 col-sm-offset-0" /> {# Ceci va générer le champ CSRF #} {{ form_rest(form) }}
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</br>
+ {% endblock %}

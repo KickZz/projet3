@@ -1,0 +1,45 @@
+{% extends "P3CoreBundle::layout.html.twig" %} {% block body %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row" >
+                <h2 id="accueil">Accueil</h2>
+                <div id="jourouvert" class="col-sm-6 col-md-6">
+                    
+                    <h3>Jours et horaires d'ouverture :</h3></br>
+                    </br>
+                    <ul>
+                        <li>Lundi : 9h à 19h</br>
+                        </li>
+                        <li>Mercredi : 9h à 19h</br>
+                        </li>
+                        <li>Jeudi : 9h à 19h</br>
+                        </li>
+                        <li>Vendredi : 9h à 19h</br>
+                        </li>
+                        <li>Samedi : 9h à 19h</br>
+                        </li>
+                    </ul>
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span><em> Fermé le Mardi et les jours fériés (1er Mai, 1er Novembre et 25 Décembre)</em>
+
+
+                </div>
+                <div id="expoencours" class="col-sm-6 col-md-6">
+                    <h3>Expositions en cours et à venir :</h3></br>
+                    </br>
+                    <ul>
+                        {% for expos in listExpos %}
+                        <li><h4>{{ expos.title }} :</h4> Du {{ expos.datestart|date("d/m/Y") }} au {{ expos.dateend|date("d/m/Y") }}</li>
+                        {% endfor%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# On affiche tous les messages flash dont le nom est « notice » #} {% for message in app.session.flashbag.get('paiement') %}
+    <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+</div>
+{% block indexbody %} {% endblock %} {% endblock %}

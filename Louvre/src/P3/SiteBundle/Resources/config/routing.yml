@@ -1,3 +1,31 @@
-p3_site_homepage:
-    path:     /
-    defaults: { _controller: P3SiteBundle:Default:index }
+p3_site_condition:
+    path:     /conditions-generales-de-vente
+    defaults: 
+        _controller: P3SiteBundle:Site:condition
+p3_site_admin:
+    path:     /admin
+    defaults: 
+        _controller: P3SiteBundle:Site:admin
+p3_site_adminsupprimer:
+    path:     /admin/supprimer
+    defaults: 
+        _controller: P3SiteBundle:Site:supprimer
+p3_site_adminsuppression:
+    path:     /admin/suppression/{id}
+    defaults: 
+        _controller: P3SiteBundle:Site:suppression
+p3_site_coordonnees:
+    path:     /coordonnees/{id}
+    defaults: 
+        _controller: P3SiteBundle:Site:coordonnees
+        _fragment: billetterie
+p3_site_paiement:
+    path:     /paiement/{id}/{idliste}
+    defaults: 
+        _controller: P3SiteBundle:Site:paiement
+        _fragment: billetterie
+p3_site_fiche:
+    path:     /fiche/{id}
+    defaults: 
+        _controller: P3SiteBundle:Site:fiche
+        

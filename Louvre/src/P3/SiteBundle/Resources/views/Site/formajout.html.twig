@@ -1,0 +1,93 @@
+<div class="well">
+    {{ form_start(form) }}
+    
+    {# Les erreurs générales du formulaire. #}
+  <div id="erreur">{{ form_errors(form) }}</div>
+<div class="form-group">
+  {# Génération du label. #}
+  {{ form_label(form.title, "Titre de l'exposition", {'label_attr':{'class':'control-label'}}) }}
+  
+  {# Génération de l'input. #}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+
+  {# Affichage des erreurs pour ce champ précis. #}
+    <div id="erreur">{{ form_errors(form.title) }}</div>
+
+</div>
+<div class="form-group">
+  {# Génération du label. #}
+  {{ form_label(form.datestart, "Date de début", {'label_attr':{'class':'control-label'}}) }}
+
+    <div class="form-inline">
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.datestart.day, {'attr': {'class': 'form-control'}}) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.datestart.month, {'attr': {'class': 'form-control'}}) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.datestart.year, {'attr': {'class': 'form-control'}}) }}
+        
+    </div>
+    
+    {# Affichage des erreurs pour ce champ précis. #}
+    <div id="erreur">{{ form_errors(form.datestart) }}</div>
+</div>
+<div class="form-group">
+  {# Génération du label. #}
+  {{ form_label(form.dateend, "Date de Fin", {'label_attr':{'class':'control-label'}}) }}
+    
+    <div class="form-inline">
+       
+        <div class="">
+        {# Génération de l'input. #}
+        {{ form_widget(form.dateend.day, {'attr': {'class': 'form-control '}}) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.dateend.month, {'attr': {'class': 'form-control '}}) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.dateend.year, {'attr': {'class': 'form-control '}}) }}
+        </div>
+    </div>
+    
+    {# Affichage des erreurs pour ce champ précis. #}
+    <div id="erreur">{{ form_errors(form.dateend) }}</div>
+    
+</div>
+<div class="form-group">
+  {# Génération du label. #}
+  {{ form_label(form.image, "Photo de l'exposition", {'label_attr':{'class':'control-label'}}) }}
+    
+  {# Génération de l'input. #}
+  {{ form_widget(form.image.file) }}
+  <div><em>* Pour un rendu parfait du carrousel les images doivent être de la taille suivante : 1920px*800px</em></div>
+  {# Affichage des erreurs pour ce champ précis. #}
+  <div id="erreur">{{ form_errors(form.image) }}</div>
+               
+
+</div>
+<div class="form-group">
+  {# Génération du label. #}
+  {{ form_label(form.content, "Description de l'exposition", {'label_attr':{'class':'control-label'}}) }}
+            
+    {# Génération de l'input. #}
+    {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+    
+    {# Affichage des erreurs pour ce champ précis. #}
+    <div id="erreur">{{ form_errors(form.content) }}</div>
+
+</div>
+<div class="form-group">
+    {{ form_widget(form.Ajouter, {'attr': {'class': 'btn btn-primary'}}) }}
+ 
+</div>
+    {# Génération automatique des champs pas encore écrits.
+     
+  {{ form_rest(form) }}
+
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
+
+</div>
