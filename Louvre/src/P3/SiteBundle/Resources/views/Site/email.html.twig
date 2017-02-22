@@ -1,35 +1,66 @@
 <html>
+
 <head>
-   <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Le Musée du Louvre</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
-    </head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
 <body>
-    <div><h3>Nombre de Billet(s) : {{ nombre }}</h3></br>
-    Date de visite : {{ date|date("d/m/Y") }}</br>
-    Tarif : {{ tarif }}</br>
-    </div>
-    Code : {{ id }}{{ date|date("d/m/Y") }}{% for individu in individus %}{{individu.nom}}{% endfor %}{{ tarif }}</br></br>
-    <div>{% for individu in individus %}
-        {{individu.nom}}</br>
-        {{individu.prenom}}</br>
-        {{individu.tarifreduit}}</br></br>
-        {{individu.nom}}</br>
-        {{individu.prenom}}</br>
-        {{individu.tarifreduit}}</br></br>
-    {% endfor %}
-    </div>
-    </body>
-<footer>
-    <div class="col-md-offset-4 col-md-4 ">
-                    <img src="{{asset ('bundles/p3core/images/logo.png')}}" alt="Louvre">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Le Musée du Louvre</h1>
+            <h2>Nombre de Billet(s) : {{ nombre }}</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Date de visite : {{ date|date("d/m/Y") }}</h3>
                 </div>
+                <div class="col-md-6">
+                    <h3>Tarif : {{ tarif/100 }}€</h3>
+                </div>
+            </div>
+            {%if type == true %}
+            <h3>Type de Billet : Journée</h3> {% else %}
+            <h3>Type de Billet : Demi-journée</h3> {% endif %}
+        </div>
+
+        <div>{% for individu in individus %}
+            
+                <div class="col-md-12">
+                    <strong>Billet : </strong> {{loop.index}}
+                </div>
+                <div class="col-md-12">
+                    <strong>Nom : </strong> {{individu.nom}}
+                </div>
+                <div class="col-md-12">
+                    <strong>Prénom : </strong> {{individu.prenom}}
+                </div>
+                <div class="col-md-12">
+                    {%if individu.tarifreduit == true %}
+                    <strong>Tarif réduit : </strong>Oui {% else %}
+                    <strong>Tarif réduit : </strong>Non {% endif %}
+                </div>
+                <div class="col-md-12">---------------</div>
+            
+            {% endfor %}
+        </div>
+        <div class="col-md-12">
+            <em>Code : {{ id }}{{ date|date("dmY") }}{% for individu in individus %}{{individu.nom}}{% endfor %}{{ tarif/100 }}</em>
+        </div>
+    </div>
+
+    <footer>
+        <div class="col-md-offset-4 col-md-4 ">
+            <img src="{{ absolute_url(asset ('bundles/p3core/images/logomail.png'))}}" alt="Louvre">
+        </div>
     </footer>
-{% block javascripts %}
+    {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
     </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% endblock %}
+</body>
+
 </html>

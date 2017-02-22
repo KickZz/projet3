@@ -11,6 +11,20 @@ $(function () {
         return false;
     });
 });
+var errorMessages = {
+  incorrect_number: "Les numéros de la carte sont incorrects.",
+  invalid_number: "Le numéro de la carte n'est pas un numéro de carte valide.",
+  invalid_expiry_month: "La date d'expiration de la carte n'est pas valide.",
+  invalid_expiry_year: "L'année de la date d'expiration de la carte n'est pas valide.",
+  invalid_cvc: "Le cryptogramme n'est pas valide.",
+  expired_card: "la carte a expirée.",
+  incorrect_cvc: "Le cryptogramme n'est pas correct.",
+  incorrect_zip: "Le code postal est incorrect.",
+  card_declined: "La carte a été refusée.",
+  missing: "Il n'y a aucune carte.",
+  processing_error: "Une erreur est arrivée en traitant la carte.",
+  rate_limit:  "Une erreur est survenue en raison des trop nombreuses requêtes. Si le problème persiste n'hésitez pas à nous contacter."
+};
 
 function stripeResponseHandler(status, response) {
     // Grab the form:
@@ -19,7 +33,7 @@ function stripeResponseHandler(status, response) {
     if (response.error) { // Problem!
 
         // Show the errors on the form:
-        $form.find('.payment-errors').text(response.error.message);
+        $form.find('.payment-errors').text(errorMessages[ response.error.code ]);
         $form.find('.submit').prop('disabled', false); // Re-enable submission
 
     } else { // Token was created!
