@@ -240,6 +240,7 @@ class SiteController extends Controller
         }
         // multiplication par 100 pour stripe
         $total = $total*100;
+       
         if ($total > 0){
          if ($request->isMethod('POST')){
             // Set your secret key: remember to change this to your live secret key in production
@@ -248,7 +249,7 @@ class SiteController extends Controller
 
             // Token is created using Stripe.js or Checkout!
             // Get the payment token submitted by the form:
-            $token = $_POST['stripeToken'];
+            $token = $request->request->get('stripeToken');
 
             // Charge the user's card:
             $charge = \Stripe\Charge::create(array(
@@ -257,6 +258,11 @@ class SiteController extends Controller
                 "description" => "Example charge",
                 "source" => $token,
             ));
+            $em = $this->getDoctrine()->getManager();
+            $billet = $em->getRepository('P3SiteBundle:Billet')->find($id);
+            $billet->setPayer(true);
+            
+            $em->flush();
             //Envoi de l'email de confirmation
             $message = \Swift_Message::newInstance()
                 ->setSubject('Vos Billets')
@@ -269,7 +275,8 @@ class SiteController extends Controller
                         'nombre' => $nbbillet,
                         'date' => $datevisite,
                         'tarif' => $total,
-                        'id' => $idbillet)),
+                        'id' => $idbillet,
+                        'type' => $type)),
                           'text/html');
 
             $this->get('mailer')->send($message);
@@ -284,22 +291,30 @@ class SiteController extends Controller
                 ->setSubject('Vos Billets')
                 ->setFrom('symfonyprojet@gmail.com')
                 ->setTo($email)
-                ->setBody($this->renderView(
-                    'P3SiteBundle:Site:email.html.twig',
+                ->setBody($this->renderView(nl2br(
+                    'P3SiteBundle:Site:email.html.twig'),
                     array(
                         'individus' => $individus,
                         'nombre' => $nbbillet,
                         'date' => $datevisite,
                         'tarif' => $total,
-                        'id' => $idbillet)),
+                        'id' => $idbillet,
+                        'type' => $type)),
                           'text/html');
 
             $this->get('mailer')->send($message);
             $request->getSession()->getFlashBag()->add('paiement', "Votre commande à bien été enregistrée, retrouvez vos billets à l'adresse mail renseignée");
-
+            
+            
+            
+            $em = $this->getDoctrine()->getManager();
+            $billet = $em->getRepository('P3SiteBundle:Billet')->find($id);
+            $billet->setPayer(true);
+            
+            $em->flush();
             return $this->redirectToRoute('p3_core_homepage');
         }
-        return $this->render('P3SiteBundle:Site:paiement.html.twig', array(
+        return $this->render(nl2br('P3SiteBundle:Site:paiement.html.twig'), array(
            'listExpos' => $listExpos,
            'id' => $id,
            'idliste' => $idliste,

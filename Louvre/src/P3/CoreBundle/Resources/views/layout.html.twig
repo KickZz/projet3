@@ -6,7 +6,10 @@
     <meta name="description" content="Billetterie du Musée du Louvre">
     <meta name="keywords" content="Exposition, Musée du Louvre, Collection">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"> {% block head %} {% endblock %} {% block stylesheets %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{{asset ('bundles/p3core/images/favicon.ico')}}" />
+    <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="/{{asset ('bundles/p3core/images/favicon.ico')}}" /><![endif]-->
+{% block head %} {% endblock %} {% block stylesheets %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> {% endblock %} {% stylesheets filter='cssrewrite, ?scssphp' 'bundles/p3site/css/site.css' %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" /> {% endstylesheets %}
 

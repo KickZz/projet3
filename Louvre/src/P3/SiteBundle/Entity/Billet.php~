@@ -44,7 +44,7 @@ class Billet
      * @var int
      *
      * @ORM\Column(name="nombrebillet", type="integer")
-     * @Assert\Range(min=1)
+     * @Assert\NotNull
      */
     private $nombrebillet;
 
@@ -171,29 +171,5 @@ class Billet
         
             }
         }
-    }
-
-    /**
-     * Set payer
-     *
-     * @param boolean $payer
-     *
-     * @return Billet
-     */
-    public function setPayer($payer)
-    {
-        $this->payer = $payer;
-
-        return $this;
-    }
-
-    /**
-     * Get payer
-     *
-     * @return boolean
-     */
-    public function getPayer()
-    {
-        return $this->payer;
     }
 }

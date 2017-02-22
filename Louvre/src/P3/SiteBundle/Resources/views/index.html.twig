@@ -39,7 +39,7 @@
         </div>
     </div>
     {# On affiche tous les messages flash dont le nom est « notice » #} {% for message in app.session.flashbag.get('paiement') %}
-    <div class="alert alert-info">{{ message }}</div>
+    <div class="alert alert-success">{{ message }}</div>
     {% endfor %}
 </div>
 {% block indexbody %} {% endblock %} {% endblock %}

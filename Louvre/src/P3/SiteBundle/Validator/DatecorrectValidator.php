@@ -33,7 +33,8 @@ class DatecorrectValidator extends ConstraintValidator
     $billet = $this->em->getRepository('P3SiteBundle:Billet');
      // on va rechercher toutes les entités vendu à cette date
     $billetvendu = $billet->findBy(
-    array ('datevisite' => $value));
+    array ('datevisite' => $value,
+           'payer' => true));
     // on va compter le nombre de billet vendu à cette date
     $total = 0;
     foreach($billetvendu as $b){
