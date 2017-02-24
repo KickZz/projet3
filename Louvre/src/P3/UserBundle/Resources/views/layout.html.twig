@@ -3,9 +3,9 @@
 {# On étend notre layout #}
 {% extends "P3CoreBundle::layout.html.twig" %}
 
-{# Dans notre layout, il faut définir le block body #}
+{# Dans notre layout, il faut définir le block connection #}
 {% block connection %}
- <div class="col-xs-offset-2 col-xs-8 col-sm-offset-8 col-sm-3 col-md-offset-2 col-md-8">
+ <div class="col-xs-offset-1 col-xs-10 col-sm-offset-7 col-sm-4 col-md-offset-2 col-md-8">
   {# On affiche les messages flash que définissent les contrôleurs du bundle #}
   {% for key, messages in app.session.flashbag.all() %}
     {% for message in messages %}
