@@ -4,3 +4,6 @@ services:
         arguments: ["@request_stack", "@doctrine.orm.entity_manager"]
         tags:
             - { name: validator.constraint_validator, alias: p3_site_datecorrect }
+            
+    p3_site.prix:
+        class: P3\SiteBundle\Prix\Prix

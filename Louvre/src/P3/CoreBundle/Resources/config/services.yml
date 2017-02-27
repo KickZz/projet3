@@ -1,4 +1,0 @@
-services:
-#    p3_core.example:
-#        class: P3\CoreBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

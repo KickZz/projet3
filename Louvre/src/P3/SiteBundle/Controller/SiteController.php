@@ -168,6 +168,9 @@ class SiteController extends Controller
     }
     public function paiementAction($id, $idliste, Request $request)
     {
+        // On récupère notre service de calcul de prix
+        $prix = $this->container->get('p3_site.prix');
+        
             $repository = $this
             ->getDoctrine()
             ->getManager()
@@ -214,27 +217,8 @@ class SiteController extends Controller
             
             //comparaison des dates
             $age = $datevisite->diff($date)->format('%Y');
-            if ($age < 4){
-                    $cout = 0;
-            }
-            else if ($tarifreduit != true)
-            {
-    
-                if ($age >= 4 && $age < 12){
-                    $cout = 8;
-                }
-                else if ($age >= 12 && $age < 60){
-                    $cout = 16;
-                }
-                else if ($age >= 60){
-                    $cout = 12;
-                }
-                
-            }
-            else if ($tarifreduit == true){
-                $cout = 10;
-            }
-            
+            // On appel le service de calcul du prix
+            $cout = $prix->calculPrix($age, $tarifreduit);
             
           $total += $cout;  
         }

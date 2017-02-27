@@ -84,7 +84,7 @@ assetic:
         formatter: 'Leafo\ScssPhp\Formatter\Compressed'
 # FOSuser Configuration
 fos_user:
-    db_driver:     orm                       # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
+    db_driver:     orm                       # Le type de BDD à utiliser
     firewall_name: main                      # Le nom du firewall derrière lequel on utilisera ces utilisateurs
     user_class:    P3\UserBundle\Entity\User # La classe de l'entité User que nous utilisons
     from_email:
