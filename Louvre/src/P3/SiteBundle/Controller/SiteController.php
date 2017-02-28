@@ -51,7 +51,7 @@ class SiteController extends Controller
       $em = $this->getDoctrine()->getManager();
       $em->persist($expo);
       $em->flush();
-            // Ajout d'un message pour confirmer l'ajout de l'annonce en BDD
+            // Ajout d'un message pour confirmer l'ajout de l'expo en BDD
       $request->getSession()->getFlashBag()->add('notice', 'Exposition ajoutée.');
 
       
@@ -72,7 +72,7 @@ class SiteController extends Controller
         $listExpo = $repository->findAll();
         
         // On crée un formulaire vide, qui ne contiendra que le champ CSRF
-    // Cela permet de protéger la suppression d'annonce contre cette faille
+    // Cela permet de protéger la suppression d'expo contre cette faille
     $form = $this->get('form.factory')->create();
         
         return $this->render('P3SiteBundle:Site:adminsupprimer.html.twig', array(
@@ -171,17 +171,17 @@ class SiteController extends Controller
         // On récupère notre service de calcul de prix
         $prix = $this->container->get('p3_site.prix');
         
-            $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('P3SiteBundle:Expo');
+            $em = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('P3SiteBundle:Expo');
         
-            $listExpos = $repository->findAll();
+            $listExpos = $em->findAll();
         // On va chercher l'entity billet correspondant à la liste
             $em = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('P3SiteBundle:Billet');
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('P3SiteBundle:Billet');
         
             $billet = $em->find($id);
             $nbbillet = $billet->getNombrebillet();

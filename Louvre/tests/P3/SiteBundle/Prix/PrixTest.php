@@ -8,8 +8,8 @@ use P3\SiteBundle\Prix\Prix;
 
 class PrixTest extends TestCase
 {
-    
-    public function testAge3()
+   
+    public function testDevraitRetournerZeroCarAgeTroisEtPasDeTarifReduit()
     {
         
         $prix = new Prix();
@@ -19,9 +19,9 @@ class PrixTest extends TestCase
         
         
     }
-    public function testAge5()
+    public function testDevraitRetournerHuitCarAgeCinqEtPasDeTarifReduit()
     {
-        
+
         $prix = new Prix();
         $result = $prix->calculPrix(5, false);
         
@@ -29,9 +29,9 @@ class PrixTest extends TestCase
         
         
     }
-    public function testAge13()
+    public function testDevraitRetournerSeizeCarAgeTreizeEtPasDeTarifReduit()
     {
-        
+
         $prix = new Prix();
         $result = $prix->calculPrix(13, false);
         
@@ -39,9 +39,9 @@ class PrixTest extends TestCase
         
         
     }
-    public function testAge60()
+    public function testDevraitRetournerDouzeCarAgeSoixanteEtPasDeTarifReduit()
     {
-        
+
         $prix = new Prix();
         $result = $prix->calculPrix(60, false);
         
@@ -49,9 +49,9 @@ class PrixTest extends TestCase
         
         
     }
-    public function testAge3TarifReduit()
+    public function testDevraitRetournerZeroCarAgeTroisTarifReduitVrai()
     {
-        
+
         $prix = new Prix();
         $result = $prix->calculPrix(3, true);
         
@@ -59,9 +59,19 @@ class PrixTest extends TestCase
         
         
     }
-    public function testAge60TarifReduit()
+    public function testDevraitRetournerDixCarAgeTreizeEtTarifReduitVrai()
     {
+
+        $prix = new Prix();
+        $result = $prix->calculPrix(13, true);
         
+        $this->assertEquals(10, $result);
+        
+        
+    }
+    public function testDevraitRetournerDixCarAgeSoixantesEtTarifReduitVrai()
+    {
+
         $prix = new Prix();
         $result = $prix->calculPrix(60, true);
         
